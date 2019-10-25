@@ -133,6 +133,26 @@ class PaymentsController extends Controller
             );
         }
 
+        $reservation_id = $payment->reservation_id;
+        error_log($reservation_id);
+        $reservation = Reservation::find($reservation_id);
+
+        $customer_id = $reservation->customer_id;
+        $customer = Customer::find($customer_id);
+
+        $package_id = $reservation->package_id;
+        $package = Package::find($package_id);
+        
+        return view(
+            'admin.payments.show',
+            [
+                'payment' => $payment,
+                'customer' => $customer,
+                'package' => $package,
+                'reservation' => $reservation,
+                'countryCodes' => $this->countrycodes
+            ]
+        );
     }
 
     /**
